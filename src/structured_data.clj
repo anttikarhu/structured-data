@@ -5,7 +5,7 @@
    (Math/pow x+x x+x)))
 
 (defn spiff [v]
-  (+ (get v 0) (get v 2)))
+  (+ (get v 0) (get v 2))) ; nth toimisi tässä samalla tavalla
 
 (defn cutify [v]
   (conj v "<3"))
@@ -34,7 +34,7 @@
 (defn area [rectangle]
    (* (height rectangle) (width rectangle)))
 
-(defn contains-point? [rectangle point]
+(defn contains-point? [rectangle point] ; Jos destrukturoidaan tässä, voidaan nimetä että ':as rectangle' esimerkiksi
   (let [[[x1 y1] [x2 y2]] rectangle
         [px py] point]
    (and
@@ -47,16 +47,16 @@
      (contains-point? outer p2))))
 
 (defn title-length [book]
-  (count (get book :title)))
+  (count (:title book)))
 
 (defn author-count [book]
-  (count (get book :authors)))
+  (count (:authors book)))
 
 (defn multiple-authors? [book]
   (> (author-count book) 1))
 
 (defn add-author [book new-author]
-  (let [authors (get book :authors)] ;voiko authorsin destrukturoida kätevämmin?
+  (let [{authors :authors} book] ;voiko authorsin destrukturoida kätevämmin?
    (assoc book :authors
     (conj authors new-author))))
 
@@ -87,10 +87,9 @@
    (conj a-set elem)))
 
 (defn contains-duplicates? [a-seq]
- (not
-  (=
+ (not=
    (count a-seq)
-   (count (set a-seq)))))
+   (count (set a-seq))))
 
 (defn old-book->new-book [book]
   (assoc book :authors (set (:authors book))))
